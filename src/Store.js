@@ -4,6 +4,7 @@
 import { combineReducers, createStore } from "redux";
 import AccountReducer from "./features/accounts/accountSlice";
 import CustomerReducer from "./features/customers/customerSlice";
+// import { Provider } from "react-redux";
 
 //  Reducer for Customer
 
