@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-import './Store.js';
+import store from './Store.js';
+
+store.dispatch({type : 'banking/credit', payload : 786});
+console.log(store.getState());
 
 
 
