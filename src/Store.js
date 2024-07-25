@@ -1,15 +1,45 @@
 // we have to write the redux code here
 
 // import { type } from "@testing-library/user-event/dist/type";
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
 
-const initialState = {
+
+const initialStateAccount = {
   loan: 0,
   amount: 0,
   loanPurpose: "",
 };
 
-function reducer(state = initialState, action) {
+const initialStateCustomer = {
+  fullName: "",
+  NationalID: "",
+  createdAt: "",
+};
+
+//  Reducer for Customer
+
+function CustomerReducer(state = initialStateCustomer, action) {
+  switch (action.type) {
+    case "customer/newCustomer":
+      return {
+        ...state,
+        fullName: action.payload.fullName,
+        NationalID: action.payload.NationalID,
+        createdAt: action.payload.createdAt,
+      };
+
+    case "customer/updateName":
+      return {
+        ...state,
+        fullName: action.payload.fullName,
+      };
+
+    default:
+      return state;
+  }
+}
+
+function AccountReducer(state = initialStateAccount, action) {
   switch (action.type) {
     case "banking/credit":
       return {
@@ -43,8 +73,15 @@ function reducer(state = initialState, action) {
   }
 }
 
-const store = createStore(reducer);
+// as now we have more than one reducer --> customerReducer and accountReducer
+// firstly we have to combine the reducer
 
+const rootReducer = combineReducers({
+  account: AccountReducer,
+  customer: CustomerReducer,
+});
+
+const store = createStore(rootReducer);
 // store.dispatch({ type: "banking/credit", payload: 500 });
 
 // console.log(store.getState());
@@ -92,7 +129,7 @@ function requestloan(loan, reason) {
 }
 
 function payLoan() {
-  return {type: "banking/payLoan"}
+  return { type: "banking/payLoan" };
 }
 // all things after that remain same as earlier
 
@@ -102,8 +139,32 @@ console.log(store.getState());
 store.dispatch(debit(200));
 console.log(store.getState());
 
-store.dispatch(requestloan(1000 , 'Have to buy A Mercedes Car '))
+store.dispatch(requestloan(1000, "Have to buy A Mercedes Car "));
 console.log(store.getState());
 
 store.dispatch(payLoan());
+console.log(store.getState());
+
+// creating the action creators for customre alos
+
+function newCustomer(fullName, NationalID) {
+  return {
+    type: "customer/newCustomer",
+    payload: { fullName, NationalID, createdAt: new Date().toISOString() },
+  };
+}
+
+function updateName(fullName) {
+  return {
+    type: "customer/updateName",
+    payload: {fullName},
+  };
+}
+
+// now we can use both reducer any time 
+// lets we have to create a customer 
+
+store.dispatch(newCustomer('Aashish Kumar', '123124'));
+store.dispatch(updateName('Aashish Kumar Kamboj'));
+store.dispatch(credit(1111))
 console.log(store.getState());
