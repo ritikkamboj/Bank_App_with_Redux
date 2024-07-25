@@ -1,10 +1,21 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { newCustomer } from "./customerSlice";
+import store from "../../Store";
 
 function Customer() {
   const [fullName, setFullName] = useState("");
   const [nationalId, setNationalId] = useState("");
 
-  function handleClick() {}
+  const dispatch = useDispatch();
+
+  function handleClick() {
+    if(!fullName || !nationalId)
+      return ;
+
+dispatch(newCustomer(fullName,nationalId));
+// console.log(store.getState());
+  }
 
   return (
     <div>
