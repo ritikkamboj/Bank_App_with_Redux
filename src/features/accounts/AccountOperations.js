@@ -24,7 +24,7 @@ console.log(amount)
 
     dispatch(credit(depositAmount , currency))
     setDepositAmount('');
-    setCurrency('');
+    setCurrency('USD');
    
 
   }
