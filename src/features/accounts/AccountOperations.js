@@ -14,7 +14,7 @@ function AccountOperations() {
 // want to check the value in account for that we have to useSelect hook
 const dispatch = useDispatch();
 // const amount = useSelector()
-const {loan : currentLoan , loanPurpose : currentLoanPurpose, amount} = useSelector(store => store.account)
+const {loan : currentLoan , loanPurpose : currentLoanPurpose, amount , isloading} = useSelector(store => store.account)
 console.log(amount)
 
 
@@ -68,7 +68,7 @@ console.log(amount)
             <option value="GBP">British Pound</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit {depositAmount}</button>
+          <button onClick={handleDeposit} disabled={isloading}>{isloading ? 'Converting...' : `Deposit ${depositAmount}`}</button>
         </div>
 
         <div>
