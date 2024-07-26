@@ -14,7 +14,7 @@ function BalanceDisplay() {
   console.log(amount)
   // console.log(balance , typeof(balance))
 
-  return <div className="balance">{formatCurrency(+amount)}</div>;
+  return <div className="balance">{formatCurrency(amount)}</div>;
 }
 
 export default BalanceDisplay;

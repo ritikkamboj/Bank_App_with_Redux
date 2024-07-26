@@ -22,8 +22,9 @@ console.log(amount)
     if(!depositAmount)
       return
 
-    dispatch(credit(depositAmount))
+    dispatch(credit(depositAmount , currency))
     setDepositAmount('');
+    setCurrency('');
    
 
   }
