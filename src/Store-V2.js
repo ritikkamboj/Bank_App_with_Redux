@@ -6,30 +6,24 @@ import AccountReducer from "./features/accounts/accountSlice";
 import CustomerReducer from "./features/customers/customerSlice";
 import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-
-import { configureStore } from "@reduxjs/toolkit";
 // import { Provider } from "react-redux";
 
 //  Reducer for Customer
 
+
 // as now we have more than one reducer --> customerReducer and accountReducer
 // firstly we have to combine the reducer
 
-// const rootReducer = combineReducers({
-// account: AccountReducer,
-// customer: CustomerReducer,
-// });
-
-// const store = createStore(rootReducer ,composeWithDevTools (applyMiddleware(thunk)));
-
-const store =configureStore({
-  reducer: {
-    account: AccountReducer,
-    customer: CustomerReducer,
-  },
+const rootReducer = combineReducers({
+  account: AccountReducer,
+  customer: CustomerReducer,
 });
 
-export default store;
+const store = createStore(rootReducer ,composeWithDevTools (applyMiddleware(thunk)));
 
-// now we can use both reducer any time
-// lets we have to create a customer
+export default store ;
+
+
+
+// now we can use both reducer any time 
+// lets we have to create a customer 
