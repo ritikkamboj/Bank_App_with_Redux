@@ -22,8 +22,8 @@ console.log(amount);
     if(!depositAmount)
       return
 
-    // dispatch(credit(depositAmount , currency))
-    dispatch(credit(depositAmount))
+    dispatch(credit(depositAmount , currency))
+    // dispatch(credit(depositAmount))
     setDepositAmount('');
     setCurrency('USD');
    
@@ -46,7 +46,7 @@ console.log(amount);
   }
 
   function handlePayLoan() {
-    dispatch(payLoan)
+    dispatch(payLoan())
   }
 
   return (

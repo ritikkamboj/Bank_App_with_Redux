@@ -94,13 +94,14 @@ const initialState = {
 };
 
 const accountSlice = createSlice({
-  name: "account",
+  name: "banking",
   initialState,
   reducers: {
     credit(state, action) {
       // interesting thing here is that we writing the code as like we are updating the state here .
       // state.amount = state.amount + action.payload;
       state.amount += action.payload;
+      state.isloading = false;
     },
     debit(state, action) {
       // state.amount = state.amount - action.payload;
@@ -119,11 +120,16 @@ const accountSlice = createSlice({
         state.amount = state.amount + action.payload.amount;
       },
     },
-    payLoan(state, action) {
+    payLoan(state) {
       state.loanPurpose = "";
       state.amount -= state.loan;
       state.loan = 0;
     },
+    convertingCurrency(state)
+    {
+      state.isloading = true
+    }
+
   },
 });
 
@@ -131,4 +137,22 @@ console.log(accountSlice);
 
 export default accountSlice.reducer;
 
-export const { credit, debit, requestloan, payLoan } = accountSlice.actions;
+export const {  debit, requestloan, payLoan, convertingCurrency } = accountSlice.actions;
+
+export  function credit(amount, currency) {
+    if (currency === "USD") return { type: "banking/credit", payload: amount };
+  
+    return async function (dispatch, getState) {
+      // const host = 'api.frankfurter.app';
+      dispatch({type : 'banking/convertingCurrency'})
+      const res = await fetch(
+        `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
+      );
+  
+      const data = await res.json();
+  
+      const converted = data.rates.USD;
+  
+      dispatch({type: "banking/credit", payload: converted})
+    };
+  }
