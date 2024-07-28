@@ -15,14 +15,15 @@ function AccountOperations() {
 const dispatch = useDispatch();
 // const amount = useSelector()
 const {loan : currentLoan , loanPurpose : currentLoanPurpose, amount , isloading} = useSelector(store => store.account)
-console.log(amount)
+console.log(amount);
 
 
   function handleDeposit() {
     if(!depositAmount)
       return
 
-    dispatch(credit(depositAmount , currency))
+    // dispatch(credit(depositAmount , currency))
+    dispatch(credit(depositAmount))
     setDepositAmount('');
     setCurrency('USD');
    
@@ -45,7 +46,7 @@ console.log(amount)
   }
 
   function handlePayLoan() {
-    dispatch(payLoan())
+    dispatch(payLoan)
   }
 
   return (
